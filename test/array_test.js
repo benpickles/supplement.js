@@ -44,6 +44,23 @@ test("uniq returns an array with all duplicates removed", function () {
   same(arr.uniq(), [1,2,3], "should remove all duplicates")
 })
 
+test("uniq doesn't confuse numbers and strings", function () {
+  var arr = [1, "1", 1, "2", 2, 3]
+
+  same(arr.uniq(), [1, "1", "2", 2, 3], "should remove all duplicates")
+})
+
+test("uniq works with objects", function () {
+  var a = {}, b = {}, c = {}
+  var arr = [a, a, a, b, b, c]
+  var uniq = arr.uniq()
+
+  equal(uniq.length, 3, "should remove all duplicates")
+  equal(uniq[0], a, "references the correct object")
+  equal(uniq[1], b, "references the correct object")
+  equal(uniq[2], c, "references the correct object")
+})
+
 test("uniq does nothing if there are no duplicates in the array", function () {
   var arr = [1,2,3]
   same(arr.uniq(), arr, "should remain the same")
